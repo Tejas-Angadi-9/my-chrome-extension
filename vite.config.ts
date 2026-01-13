@@ -26,7 +26,6 @@ export default defineConfig({
       },
       output: {
         entryFileNames: (chunk) => {
-          console.log("chunk: ", chunk);
           if (chunk.name === "content") {
             return "content.js";
           }
