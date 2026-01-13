@@ -9,7 +9,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "public/manifest.json",
+          src: "./public/manifest.json",
           dest: ".",
         },
       ],
@@ -18,9 +18,20 @@ export default defineConfig({
   ],
   build: {
     outDir: "build",
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         main: "./index.html",
+        content: "./src/content.ts",
+      },
+      output: {
+        entryFileNames: (chunk) => {
+          console.log("chunk: ", chunk);
+          if (chunk.name === "content") {
+            return "content.js";
+          }
+          return "[name].js";
+        },
       },
     },
   },
