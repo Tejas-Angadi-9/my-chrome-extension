@@ -22,7 +22,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "./index.html",
-        content: "./src/content.ts",
+        content: "./src/content/content.ts",
       },
       output: {
         entryFileNames: (chunk) => {

@@ -1,0 +1,9 @@
+export type PRExtractedData = {
+  commitHints: string[];
+  branches: {
+    base: string;
+    compare: string;
+  };
+};
+
+export type BranchType = "base" | "compare";
