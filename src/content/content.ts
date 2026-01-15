@@ -1,6 +1,7 @@
 import {
   BRANCH_SELECTOR,
   COMMIT_MESSAGE_SELECTOR,
+  FILENAME_SELECTOR,
   GITHUB_HOST,
   GITHUB_PATHNAME,
   PROMISE_INTERVAL,
@@ -22,9 +23,7 @@ const isGithubPRPage = (): boolean => {
 
 // TODO: Add a TS type
 const extractCommitMessages = (): string[] => {
-  const commits: HTMLCollectionOf<Element> = document.getElementsByClassName(
-    COMMIT_MESSAGE_SELECTOR,
-  );
+  const commits: any = document.querySelectorAll(COMMIT_MESSAGE_SELECTOR);
 
   const commitsArray: string[] = Array.from(commits).map((commit) =>
     (commit as HTMLElement).innerText.trim(),
@@ -33,9 +32,8 @@ const extractCommitMessages = (): string[] => {
 };
 
 const extractBranchName = (currentBranch: BranchType): string | undefined => {
-  const branches: HTMLCollectionOf<Element> = document.getElementsByClassName(
-    BRANCH_SELECTOR,
-  );
+  const branches: HTMLCollectionOf<Element> =
+    document.getElementsByClassName(BRANCH_SELECTOR);
 
   const branch: string =
     currentBranch === "base"
@@ -45,6 +43,14 @@ const extractBranchName = (currentBranch: BranchType): string | undefined => {
   return branch;
 };
 
+const extractFileNames = (): string[] => {
+  const fileNamesElement = document.getElementsByClassName(FILENAME_SELECTOR);
+  const fileNames: string[] = Array.from(fileNamesElement).map((fileName) =>
+    (fileName as HTMLElement).innerText.trim(),
+  );
+  return fileNames;
+};
+
 const waitForCommits = (): Promise<PRExtractedData> => {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
@@ -52,12 +58,18 @@ const waitForCommits = (): Promise<PRExtractedData> => {
       const commits = extractCommitMessages();
       const baseBranch = extractBranchName("base");
       const compareBranch = extractBranchName("compare");
-
-      if (commits.length > 0 && baseBranch && compareBranch) {
+      const fileNames = extractFileNames();
+      if (
+        commits.length > 0 &&
+        fileNames.length > 0 &&
+        baseBranch &&
+        compareBranch
+      ) {
         clearInterval(interval);
         resolve({
           commitHints: commits,
           branches: { base: baseBranch, compare: compareBranch },
+          filesNames: fileNames,
         });
       }
 
@@ -75,8 +87,8 @@ const main = async () => {
   if (!isGithubPRPage()) return;
 
   // Extracting commit messages using vanilla JS
-  const commitMessages = await waitForCommits();
-  console.log("commitMessages: ", commitMessages);
+  const PR_Payload = await waitForCommits();
+  console.log("PR_Payload: ", PR_Payload);
 };
 
 main();

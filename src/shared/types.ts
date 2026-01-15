@@ -4,6 +4,7 @@ export type PRExtractedData = {
     base: string;
     compare: string;
   };
+  filesNames: string[];
 };
 
 export type BranchType = "base" | "compare";

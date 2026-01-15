@@ -2,10 +2,9 @@ export const GITHUB_HOST: string = "github.com";
 export const GITHUB_PATHNAME: string = "/compare";
 
 export const COMMIT_MESSAGE_SELECTOR: string =
-  "Link--primary.text-bold.js-navigation-open.markdown-title";
+  "a.Link--primary.text-bold.js-navigation-open.markdown-title";
+export const BRANCH_SELECTOR: string = "css-truncate css-truncate-target";
+export const FILENAME_SELECTOR: string = "Link--primary Truncate-text";
 
-export const BRANCH_SELECTOR: string =
-  "css-truncate css-truncate-target";
-
-export const TIMEOUT_SAFEGUARD: number = 10000;
+export const TIMEOUT_SAFEGUARD: number = 10_000; //* FYI -> Using underscore ( _ ) to improve the readability for large numbers. It works same as 10000 number
 export const PROMISE_INTERVAL: number = 300;
