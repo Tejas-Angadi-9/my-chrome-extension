@@ -1,23 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-interface PRState {
-  generateTitle: boolean;
-  generateDescription: boolean;
-  instructions: string;
-
-  titleResult: string;
-  descriptionResult: string;
-
-  isLoading: boolean;
-
-  setGenerateTitle: (value: boolean) => void;
-  setGenerateDescription: (value: boolean) => void;
-  setInstructions: (value: string) => void;
-
-  setResults: (title: string, desc: string) => void;
-  setLoading: (value: boolean) => void;
-}
+import type { PRState } from "./prGenerator.interface";
 
 export const usePRStore = create<PRState>()(
   persist(

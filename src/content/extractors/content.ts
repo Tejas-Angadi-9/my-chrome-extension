@@ -6,8 +6,8 @@ import {
   GITHUB_PATHNAME,
   PROMISE_INTERVAL,
   TIMEOUT_SAFEGUARD,
-} from "../shared/constants";
-import type { BranchType, PRExtractedData } from "../shared/types";
+} from "../../shared/constants";
+import type { BranchType, PRExtractedData } from "../../shared/types";
 
 const isGithubPRPage = (): boolean => {
   const { hostname, pathname } = window.location;
