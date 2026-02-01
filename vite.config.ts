@@ -22,7 +22,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "./index.html",
-        content: "./src/content/extractors/content.ts",
+        content: "./src/content/index.ts",
+        background: "./src/background/index.ts",
       },
       output: {
         entryFileNames: (chunk) => {
