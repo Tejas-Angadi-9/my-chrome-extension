@@ -8,3 +8,8 @@ export const FILENAME_SELECTOR: string = "Link--primary Truncate-text";
 
 export const TIMEOUT_SAFEGUARD: number = 10_000; //* FYI -> Using underscore ( _ ) to improve the readability for large numbers. It works same as 10000 number
 export const PROMISE_INTERVAL: number = 300;
+
+// export const MESSAGE_TYPES = {
+//   PR_ANALYSIS_COMPLETE: "PR_ANALYSIS_COMPLETE",
+//   ANALYZE_PR: "ANALYZE_PR",
+// } as const;

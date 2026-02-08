@@ -26,3 +26,4 @@ dist-ssr
 # Personal TODO list
 TODO.md
 build
+.env
