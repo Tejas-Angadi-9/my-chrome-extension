@@ -3,12 +3,17 @@ import { usePRStore } from "../store/prGenerator.store";
 export const InstructionTextarea = () => {
   const { instructions, setInstructions } = usePRStore();
 
+  const textChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInstructions(event.target.value)
+  }
+
   return (
     <textarea
       value={instructions}
-      onChange={(event) => setInstructions(event.target.value)}
+      onChange={textChangeHandler}
       placeholder="Optional instructions (e.g. keep it concise, use bullet points)..."
-      className="w-full min-h-20 rounded-lg border border-gray-300 p-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+      rows={3}
+      className="w-full resize-none rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)] transition-colors"
     />
   );
 };

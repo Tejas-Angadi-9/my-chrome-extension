@@ -9,12 +9,11 @@ export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
 
   return (
-    <div className="w-90 p-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg flex flex-col gap-4 font-sans text-white">
+    <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-[var(--popup-width)]">
       <Header />
       <CheckboxGroup />
       <InstructionTextarea />
       <ActionButtons />
-      {/* <SubmitButton /> */}
       {(titleResult || descriptionResult) && <ResultSection />}
     </div>
   );

@@ -6,11 +6,13 @@ export const ResultSection = () => {
   if (!titleResult && !descriptionResult) return null;
 
   return (
-    <div className="mt-6 space-y-4 text-black">
+    <div className="mt-2 space-y-4 border-t border-[var(--border)] pt-4">
       {titleResult && (
         <div>
-          <p className="text-xs text-gray-500 mb-1">Title</p>
-          <div className="rounded-lg bg-gray-100 p-2 text-sm">
+          <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
+            Title
+          </p>
+          <div className="rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] px-3 py-2.5 text-sm text-[var(--text-primary)]">
             {titleResult}
           </div>
         </div>
@@ -18,8 +20,10 @@ export const ResultSection = () => {
 
       {descriptionResult && (
         <div>
-          <p className="text-xs text-gray-500 mb-1">Description</p>
-          <div className="rounded-lg bg-gray-100 p-2 text-sm whitespace-pre-wrap">
+          <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
+            Description
+          </p>
+          <div className="whitespace-pre-wrap rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] px-3 py-2.5 text-sm text-[var(--text-primary)]">
             {descriptionResult}
           </div>
         </div>

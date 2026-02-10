@@ -1,6 +1,9 @@
 import { usePRStore } from "../store/prGenerator.store";
 
 export const setupMessageListener = () => {
+  if(typeof chrome === "undefined" || !chrome.runtime.onMessage){
+    return;
+  }
   chrome.runtime.onMessage.addListener((message) => {
     console.log("📨 Message received:", message);
 
