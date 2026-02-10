@@ -7,7 +7,7 @@ const App = () => {
 
   useEffect(() => {
     if (!listenerSetup.current) {
-      // setupMessageListener(); 
+      setupMessageListener(); 
       listenerSetup.current = true;
     }
   }, []);
