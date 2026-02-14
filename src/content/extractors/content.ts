@@ -5,7 +5,6 @@ import {
 } from "../../shared/constants";
 import type { BranchType } from "../../shared/types";
 
-// TODO: Add a TS type
 export const extractCommitMessages = (): string[] => {
   const commits: any = document.querySelectorAll(COMMIT_MESSAGE_SELECTOR);
 

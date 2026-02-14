@@ -33,13 +33,6 @@ export const setupMessageListener = () => {
         }
       }
 
-      console.log(
-        "✅ Parsed - Title:",
-        titleResult.trim(),
-        "Description:",
-        descriptionResult.trim(),
-      );
-
       setResults(titleResult.trim(), descriptionResult.trim());
       setLoading(false);
     }

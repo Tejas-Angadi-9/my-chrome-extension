@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ActionButtons } from "../components/ActionButtons";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Header } from "../components/Header";
@@ -7,6 +8,15 @@ import { usePRStore } from "../store/prGenerator.store";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
+  // TODO: Checking if there is update in the states
+  // TODO: At default, I'm getting the mock data.
+  // TODO: Replace this mock data with the response
+  useEffect(() => {
+    console.log({
+      titleResult: titleResult,
+      descriptionResult: descriptionResult,
+    });
+  }, [titleResult, descriptionResult]);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-[var(--popup-width)]">

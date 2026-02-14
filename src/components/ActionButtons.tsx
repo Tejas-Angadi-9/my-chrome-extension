@@ -1,25 +1,24 @@
+import { useRef } from "react";
 import { usePRStore } from "../store/prGenerator.store";
-import { mockGenerate } from "../utils/mockGenerate";
+import { setupMessageListener } from "../utils/setupMessageListener";
 
 export const ActionButtons = () => {
-  const {
-    generateTitle,
-    generateDescription,
-    setResults,
-    isLoading,
-    setLoading,
-  } = usePRStore();
+  const { isLoading, setLoading } = usePRStore();
 
   const handleGenerate = async () => {
     setLoading(true);
+    const listenerSetup = useRef(false);
 
-    const { title, description } = await mockGenerate({
-      generateTitle,
-      generateDescription,
-    });
-
-    setResults(title, description);
-    setLoading(false);
+    try {
+      if (!listenerSetup.current) {
+        setupMessageListener();
+        listenerSetup.current = true;
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
