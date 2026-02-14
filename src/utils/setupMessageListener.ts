@@ -4,13 +4,13 @@ export const setupMessageListener = () => {
   if (typeof chrome === "undefined" || !chrome.runtime.onMessage) {
     return;
   }
+
+  const { setResults, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
     console.log("📨 Message received:", message);
-
+    
     // TODO: There is hard coding of string, please move it to constants or other file
     if (message.type === "PR_ANALYSIS_COMPLETE") {
-      const { setResults } = usePRStore.getState();
-
       const geminiText: string = message.result;
 
       const lines: string[] = geminiText.split("\n");
@@ -34,6 +34,7 @@ export const setupMessageListener = () => {
       }
 
       setResults(titleResult.trim(), descriptionResult.trim());
+      setIsLoading(false);
     }
   });
 };

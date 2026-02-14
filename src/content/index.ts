@@ -11,4 +11,8 @@ const main = async () => {
   chrome.runtime.sendMessage({ type: "ANALYZE_PR", PrPayload });
 };
 
-main();
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "RUN_PR_EXTRACTION") {
+    main();
+  }
+});

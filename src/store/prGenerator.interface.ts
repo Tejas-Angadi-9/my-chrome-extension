@@ -13,5 +13,5 @@ export interface PRState {
   setInstructions: (value: string) => void;
 
   setResults: (title: string, desc: string) => void;
-  setLoading: (value: boolean) => void;
+  setIsLoading: (value: boolean) => void;
 }

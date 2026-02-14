@@ -21,7 +21,7 @@ export const usePRStore = create<PRState>()(
       setResults: (title, desc) =>
         set({ titleResult: title, descriptionResult: desc }),
 
-      setLoading: (value) => set({ isLoading: value }),
+      setIsLoading: (value) => set({ isLoading: value }),
     }),
     {
       name: "pr-generator-storage",
