@@ -9,10 +9,10 @@ export const ResultSection = () => {
     <div className="mt-2 space-y-4 border-t border-[var(--border)] pt-4">
       {titleResult && (
         <div>
-          <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
             Title
           </p>
-          <div className="rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] px-3 py-2.5 text-sm text-[var(--text-primary)]">
+          <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm text-[var(--text-primary)] backdrop-blur-sm">
             {titleResult}
           </div>
         </div>
@@ -20,10 +20,10 @@ export const ResultSection = () => {
 
       {descriptionResult && (
         <div>
-          <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
             Description
           </p>
-          <div className="whitespace-pre-wrap rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] px-3 py-2.5 text-sm text-[var(--text-primary)]">
+          <div className="whitespace-pre-wrap rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm leading-relaxed text-[var(--text-primary)] backdrop-blur-sm">
             {descriptionResult}
           </div>
         </div>

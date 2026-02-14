@@ -35,8 +35,10 @@ export const ActionButtons = () => {
     <button
       onClick={handleGenerate}
       disabled={isLoading}
-      className="w-full rounded-[var(--radius)] bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-[var(--bg-primary)] transition-colors hover:bg-[var(--accent-hover)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[var(--accent)] cursor-pointer">
-      {isLoading ? "Generating..." : "Generate"}
+      className="relative w-full overflow-hidden rounded-[var(--radius)] bg-gradient-to-r from-[var(--accent)] to-[var(--accent-end)] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_var(--accent-glow)] transition-all duration-200 hover:shadow-[0_0_28px_var(--accent-glow)] disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none">
+      <span className="relative z-10">
+        {isLoading ? "Generating..." : "Generate PR"}
+      </span>
     </button>
   );
 };

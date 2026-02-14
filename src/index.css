@@ -1,23 +1,35 @@
 @import "tailwindcss";
 
-/* Design tokens */
 :root {
   --popup-width: 380px;
   --popup-min-height: 420px;
   --popup-max-height: 560px;
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-elevated: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent: #22d3ee;
-  --accent-hover: #06b6d4;
-  --accent-muted: rgba(34, 211, 238, 0.15);
-  --border: #334155;
+
+  --bg-base: #0a0a0f;
+  --bg-primary: #0f0f18;
+  --bg-secondary: #16161f;
+  --bg-elevated: #1e1e2a;
+  --bg-card: rgba(30, 30, 42, 0.7);
+
+  --text-primary: #f4f4f7;
+  --text-secondary: #a1a1b3;
+  --text-muted: #6b6b7d;
+
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-end: #d946ef;
+  --accent-muted: rgba(139, 92, 246, 0.12);
+  --accent-glow: rgba(139, 92, 246, 0.25);
+
+  --border: rgba(107, 107, 125, 0.25);
+  --border-focus: rgba(139, 92, 246, 0.5);
+
   --success: #34d399;
-  --radius: 8px;
-  --radius-sm: 6px;
+  --success-muted: rgba(52, 211, 153, 0.15);
+
+  --radius: 10px;
+  --radius-sm: 8px;
+  --radius-full: 9999px;
 }
 
 * {
@@ -37,8 +49,8 @@ body,
 }
 
 body {
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-  background: var(--bg-primary);
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  background: linear-gradient(165deg, var(--bg-base) 0%, var(--bg-primary) 40%, #12121a 100%);
   color: var(--text-primary);
   font-size: 14px;
   line-height: 1.5;
@@ -58,9 +70,50 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--bg-elevated);
-  border-radius: 3px;
+  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 36px;
+  height: 20px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-end) 100%);
+  border-color: transparent;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: translateX(16px);
+  background: white;
+}
+
+input[type="checkbox"]:hover:not(:disabled) {
+  border-color: var(--border-focus);
 }

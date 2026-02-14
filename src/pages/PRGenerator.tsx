@@ -19,7 +19,7 @@ export default function PRGenerator() {
   }, [titleResult, descriptionResult]);
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 w-full max-w-[var(--popup-width)]">
+    <div className="flex flex-1 flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">
       <Header />
       <CheckboxGroup />
       <InstructionTextarea />
