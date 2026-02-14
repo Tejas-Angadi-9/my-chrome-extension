@@ -5,7 +5,7 @@ console.log("🧩 BACKGROUND SERVICE WORKER LOADED");
 
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   if (message.type === "ANALYZE_PR") {
-    analyzePRWithGemini(message.PR_Payload as PRExtractedData)
+    analyzePRWithGemini(message.PrPayload as PRExtractedData)
       .then((result) => {
         console.log("✅ Gemini result ready:", result);
         sendResponse({ success: true, result });

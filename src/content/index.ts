@@ -6,9 +6,9 @@ const main = async () => {
   if (!isGithubPRPage()) return;
 
   // Extracting commit messages using vanilla JS
-  const PR_Payload = await waitForCommits();
-  console.log("PR_Payload: ", PR_Payload);
-  chrome.runtime.sendMessage({ type: "ANALYZE_PR", PR_Payload });
+  const PrPayload = await waitForCommits();
+  console.log("PrPayload: ", PrPayload);
+  chrome.runtime.sendMessage({ type: "ANALYZE_PR", PrPayload });
 };
 
 main();
