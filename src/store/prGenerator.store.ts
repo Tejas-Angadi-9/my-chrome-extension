@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PRState } from "./prGenerator.interface";
+import type { PRState } from "../interfaces/prGenerator.interface";
 
 export const usePRStore = create<PRState>()(
   persist(
