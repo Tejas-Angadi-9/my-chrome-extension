@@ -9,7 +9,7 @@ const main = async () => {
   const PrPayload = await waitForCommits();
   console.log("PrPayload: ", PrPayload);
   chrome.runtime.sendMessage({ type: "ANALYZE_PR", PrPayload });
-};
+}; 
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === "RUN_PR_EXTRACTION") {

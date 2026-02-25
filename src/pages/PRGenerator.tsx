@@ -8,9 +8,9 @@ import usePRStore from "../store/prGenerator.store";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
-  // TODO: Checking if there is update in the states
-  // TODO: At default, I'm getting the mock data.
-  // TODO: Replace this mock data with the response
+  /* TODO: Checking if there is update in the states
+  At default, I'm getting the mock data.
+  Replace this mock data with the response */
   useEffect(() => {
     console.log({
       titleResult: titleResult,

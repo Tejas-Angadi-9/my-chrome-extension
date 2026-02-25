@@ -7,32 +7,38 @@ import {
 } from "./extractors/content";
 
 export const waitForCommits = (): Promise<PRExtractedData> => {
-  return new Promise((resolve, reject) => {
-    const interval = setInterval(() => {
-      const start = Date.now();
-      const commits = extractCommitMessages();
-      const baseBranch = extractBranchName("base");
-      const compareBranch = extractBranchName("compare");
-      const fileNames = extractFileNames();
-      if (
-        commits.length > 0 &&
-        fileNames.length > 0 &&
-        baseBranch &&
-        compareBranch
-      ) {
-        clearInterval(interval);
-        resolve({
-          commitHints: commits,
-          branches: { base: baseBranch, compare: compareBranch },
-          filesNames: fileNames,
-        });
-      }
+  const PrExtractedResponse: Promise<PRExtractedData> = new Promise(
+    (resolve, reject) => {
+      const startedAt = Date.now();
 
-      // timeout safeguard (10s)
-      if (Date.now() - start > TIMEOUT_SAFEGUARD) {
-        clearInterval(interval);
-        reject("Timed out waiting for PR data");
-      }
-    }, PROMISE_INTERVAL);
-  });
+      const intervalId = setInterval(() => {
+        const commits: string[] = extractCommitMessages();
+        const baseBranch: string | undefined = extractBranchName("base");
+        const compareBranch: string | undefined = extractBranchName("compare");
+        const fileNames: string[] = extractFileNames();
+
+        const hasAllData =
+          commits.length > 0 &&
+          fileNames.length > 0 &&
+          baseBranch &&
+          compareBranch;
+
+        if (hasAllData) {
+          clearInterval(intervalId);
+          resolve({
+            commitHints: commits,
+            branches: { base: baseBranch, compare: compareBranch },
+            filesNames: fileNames,
+          });
+          return;
+        }
+
+        if (Date.now() - startedAt > TIMEOUT_SAFEGUARD) {
+          clearInterval(intervalId);
+          reject("Timed out waiting for PR data");
+        }
+      }, PROMISE_INTERVAL);
+    },
+  );
+  return PrExtractedResponse;
 };
