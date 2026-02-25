@@ -1,4 +1,4 @@
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 
 export const ResultSection = () => {
   const { titleResult, descriptionResult } = usePRStore();

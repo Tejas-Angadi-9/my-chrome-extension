@@ -1,11 +1,11 @@
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 
 export const InstructionTextarea = () => {
   const { instructions, setInstructions } = usePRStore();
 
   const textChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInstructions(event.target.value)
-  }
+    setInstructions(event.target.value);
+  };
 
   return (
     <textarea

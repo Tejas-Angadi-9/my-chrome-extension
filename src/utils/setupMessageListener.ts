@@ -1,4 +1,4 @@
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 
 export const setupMessageListener = () => {
   if (typeof chrome === "undefined" || !chrome.runtime.onMessage) {
@@ -8,7 +8,7 @@ export const setupMessageListener = () => {
   const { setResults, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
     console.log("📨 Message received:", message);
-    
+
     // TODO: There is hard coding of string, please move it to constants or other file
     if (message.type === "PR_ANALYSIS_COMPLETE") {
       const geminiText: string = message.result;

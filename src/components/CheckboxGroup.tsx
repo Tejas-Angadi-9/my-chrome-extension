@@ -1,11 +1,11 @@
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 
 export const CheckboxGroup = () => {
   const {
-    generateTitle,
-    generateDescription,
-    setGenerateTitle,
-    setGenerateDescription,
+    isGenerateTitleEnabled,
+    IsGenerateDescriptionEnabled,
+    setIsGenerateTitleEnabled,
+    setIsGenerateDescriptionEnabled,
   } = usePRStore();
 
   return (
@@ -13,16 +13,18 @@ export const CheckboxGroup = () => {
       <label className="flex cursor-pointer items-center gap-3 text-sm text-[var(--text-primary)] transition-opacity hover:opacity-90">
         <input
           type="checkbox"
-          checked={generateTitle}
-          onChange={(event) => setGenerateTitle(event.target.checked)}
+          checked={isGenerateTitleEnabled}
+          onChange={(event) => setIsGenerateTitleEnabled(event.target.checked)}
         />
         <span className="font-medium">Title</span>
       </label>
       <label className="flex cursor-pointer items-center gap-3 text-sm text-[var(--text-primary)] transition-opacity hover:opacity-90">
         <input
           type="checkbox"
-          checked={generateDescription}
-          onChange={(event) => setGenerateDescription(event.target.checked)}
+          checked={IsGenerateDescriptionEnabled}
+          onChange={(event) =>
+            setIsGenerateDescriptionEnabled(event.target.checked)
+          }
         />
         <span className="font-medium">Description</span>
       </label>

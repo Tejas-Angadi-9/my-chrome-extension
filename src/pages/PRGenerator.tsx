@@ -4,7 +4,7 @@ import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Header } from "../components/Header";
 import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();

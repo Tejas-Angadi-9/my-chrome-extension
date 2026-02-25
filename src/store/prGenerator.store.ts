@@ -2,29 +2,30 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { PRState } from "../interfaces/prGenerator.interface";
 
-export const usePRStore = create<PRState>()(
+const usePRStore = create<PRState>()(
   persist(
     (set) => ({
-      generateTitle: true,
-      generateDescription: true,
+      isGenerateTitleEnabled: true,
+      IsGenerateDescriptionEnabled: true,
       instructions: "",
-
       titleResult: "",
       descriptionResult: "",
-
       isLoading: false,
 
-      setGenerateTitle: (value) => set({ generateTitle: value }),
-      setGenerateDescription: (value) => set({ generateDescription: value }),
-      setInstructions: (value) => set({ instructions: value }),
-
-      setResults: (title, desc) =>
-        set({ titleResult: title, descriptionResult: desc }),
-
-      setIsLoading: (value) => set({ isLoading: value }),
+      setIsGenerateTitleEnabled: (isTitleEnabled: boolean) =>
+        set({ isGenerateTitleEnabled: isTitleEnabled }),
+      setIsGenerateDescriptionEnabled: (isDescriptionEnabled: boolean) =>
+        set({ IsGenerateDescriptionEnabled: isDescriptionEnabled }),
+      setInstructions: (updatedInstructions: string) =>
+        set({ instructions: updatedInstructions }),
+      setResults: (title: string, description: string) =>
+        set({ titleResult: title, descriptionResult: description }),
+      setIsLoading: (loading: boolean) => set({ isLoading: loading }),
     }),
     {
       name: "pr-generator-storage",
     },
   ),
 );
+
+export default usePRStore;

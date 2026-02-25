@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { usePRStore } from "../store/prGenerator.store";
+import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
 
 export const ActionButtons = () => {
