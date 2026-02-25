@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PRGenerator from "./pages/PRGenerator";
-import { usePRStore } from "./store/prGenerator.store";
+import usePRStore from "./store/prGenerator.store";
 import Loading from "./components/common/Loading";
 import Error from "./components/common/Error";
 import InvalidComparePage from "./components/common/InvalidComparePage";
@@ -17,7 +17,9 @@ const App = () => {
     setError(null);
 
     try {
+      // TODO: Move this hard coded string of chrome type to constant
       if (typeof chrome === "undefined" || !chrome.tabs) {
+        // TODO: Move this hard coded string of error message to constant
         setError("Extension context not available");
         return;
       }
@@ -35,6 +37,7 @@ const App = () => {
 
       try {
         const { hostname, pathname } = new URL(url);
+        // TODO: Move this hard coded string of hostname and pathname to constant
         isComparePage =
           hostname === "github.com" && pathname.includes("/compare");
       } catch {
@@ -42,10 +45,10 @@ const App = () => {
       }
 
       setIsGithubComparePage(isComparePage);
-    } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Failed to check tab URL",
-      );
+    } catch (error: unknown) {
+      // TODO: Move this hard coded string of error message to constant
+      const errorMessage: string = "Failed to check tab URL";
+      setError(errorMessage);
       setIsGithubComparePage(false);
     } finally {
       setIsLoading(false);
