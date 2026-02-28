@@ -5,8 +5,8 @@ import type { PRState } from "../interfaces/prGenerator.interface";
 const usePRStore = create<PRState>()(
   persist(
     (set) => ({
-      isGenerateTitleEnabled: true,
-      IsGenerateDescriptionEnabled: true,
+      isGenerateTitleEnabled: false,
+      IsGenerateDescriptionEnabled: false,
       instructions: "",
       titleResult: "",
       descriptionResult: "",
