@@ -33,8 +33,8 @@ const handleAnalysePrMessage = async ({
 
 // Main Entry point
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
-  if (message.type !== "ANALYSE_PR") {
-    console.log("Message Type is not ANALYSE_PR");
+  if (message.type !== "ANALYZE_PR") {
+    console.log("Message Type is not ANALYZE_PR");
     return;
   }
 

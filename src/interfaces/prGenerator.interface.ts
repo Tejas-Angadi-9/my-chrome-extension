@@ -1,6 +1,6 @@
 export interface PRState {
   isGenerateTitleEnabled: boolean;
-  IsGenerateDescriptionEnabled: boolean;
+  isGenerateDescriptionEnabled: boolean;
   instructions: string;
   titleResult: string;
   descriptionResult: string;

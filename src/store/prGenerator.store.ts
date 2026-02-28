@@ -6,7 +6,7 @@ const usePRStore = create<PRState>()(
   persist(
     (set) => ({
       isGenerateTitleEnabled: false,
-      IsGenerateDescriptionEnabled: false,
+      isGenerateDescriptionEnabled: false,
       instructions: "",
       titleResult: "",
       descriptionResult: "",
@@ -15,7 +15,7 @@ const usePRStore = create<PRState>()(
       setIsGenerateTitleEnabled: (isTitleEnabled: boolean) =>
         set({ isGenerateTitleEnabled: isTitleEnabled }),
       setIsGenerateDescriptionEnabled: (isDescriptionEnabled: boolean) =>
-        set({ IsGenerateDescriptionEnabled: isDescriptionEnabled }),
+        set({ isGenerateDescriptionEnabled: isDescriptionEnabled }),
       setInstructions: (updatedInstructions: string) =>
         set({ instructions: updatedInstructions }),
       setResults: (title: string, description: string) =>

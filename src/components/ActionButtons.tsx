@@ -3,10 +3,21 @@ import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
 
 export const ActionButtons = () => {
-  const { isLoading, setIsLoading } = usePRStore();
-  const listenerSetup = useRef(false);
+  const {
+    isLoading,
+    setIsLoading,
+    isGenerateTitleEnabled,
+    isGenerateDescriptionEnabled,
+    instructions,
+  } = usePRStore();
+  const listenerSetup: React.RefObject<boolean> = useRef(false);
+  const prOptions = {
+    isGenerateTitleEnabled,
+    isGenerateDescriptionEnabled,
+    instructions,
+  };
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (): Promise<void> => {
     setIsLoading(true);
     try {
       if (!listenerSetup.current) {
@@ -22,6 +33,7 @@ export const ActionButtons = () => {
       if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
           type: "RUN_PR_EXTRACTION",
+          prOptions: prOptions,
         });
       } else {
         setIsLoading(false);
