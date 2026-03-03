@@ -4,11 +4,15 @@ import { waitForCommits } from "./waiters";
 
 const main = async (prOptions: any) => {
   if (!isGithubPRPage()) return;
-  console.log("prOptions2: ", prOptions);
   const PrPayload: PRExtractedData = await waitForCommits();
-  console.log("PrPayload: ", PrPayload);
+  const updatedPrPayload = { ...prOptions, PrPayload };
 
-  chrome.runtime.sendMessage({ type: "ANALYZE_PR", PrPayload });
+  // TODO: Remove this print statement, once development is done
+  console.log("prPayload: ", updatedPrPayload);
+  chrome.runtime.sendMessage({
+    type: "ANALYZE_PR",
+    PrPayload: updatedPrPayload,
+  });
 };
 
 chrome.runtime.onMessage.addListener((message) => {
@@ -17,10 +21,8 @@ chrome.runtime.onMessage.addListener((message) => {
     console.log("No PR Options found");
     return;
   }
-  console.log("prOptions1: ", prOptions);
 
   if (message.type === "RUN_PR_EXTRACTION") {
-    console.log("Message: ", prOptions);
     main(prOptions);
   }
 });
