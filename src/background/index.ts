@@ -1,5 +1,4 @@
-import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundMessage.interface";
-import type { PRExtractedData } from "../shared/types";
+import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundScripts.interface";
 import { analyzePRWithGemini } from "./gemini.service";
 
 console.log("🧩 BACKGROUND SERVICE WORKER LOADED");
@@ -39,7 +38,7 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   }
 
   void handleAnalysePrMessage({
-    payload: message.PrPayload as PRExtractedData,
+    payload: message.PrPayload,
     sendResponse,
   });
   return true;

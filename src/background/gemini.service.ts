@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import type { PRExtractedData } from "../shared/types";
-import { buildPRPrompt } from "./utils/buildPRPrompt";
+import type { BuildPRPromptOptions } from "../interfaces/backgroundScripts.interface";
+import buildPRPrompt from "./utils/buildPRPrompt";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -8,9 +8,9 @@ if (!GEMINI_API_KEY) {
   throw new Error("Missing Gemini API key");
 }
 
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+const ai: GoogleGenAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-export const analyzePRWithGemini = async (PrPayload: PRExtractedData) => {
+export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
   const prompt: string = buildPRPrompt(PrPayload);
 
   try {

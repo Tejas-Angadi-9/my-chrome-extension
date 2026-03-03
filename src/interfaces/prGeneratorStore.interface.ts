@@ -9,6 +9,6 @@ export interface PRState {
   setIsGenerateTitleEnabled: (isTitleEnabled: boolean) => void;
   setIsGenerateDescriptionEnabled: (isDescriptionEnabled: boolean) => void;
   setInstructions: (updatedInstructions: string) => void;
-  setResults: (title: string, description: string) => void;
+  setResults: (title?: string, description?: string) => void;
   setIsLoading: (loading: boolean) => void;
 }

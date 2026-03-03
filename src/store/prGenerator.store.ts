@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PRState } from "../interfaces/prGenerator.interface";
+import type { PRState } from "../interfaces/prGeneratorStore.interface";
 
 const usePRStore = create<PRState>()(
   persist(
@@ -18,7 +18,7 @@ const usePRStore = create<PRState>()(
         set({ isGenerateDescriptionEnabled: isDescriptionEnabled }),
       setInstructions: (updatedInstructions: string) =>
         set({ instructions: updatedInstructions }),
-      setResults: (title: string, description: string) =>
+      setResults: (title?: string, description?: string) =>
         set({ titleResult: title, descriptionResult: description }),
       setIsLoading: (loading: boolean) => set({ isLoading: loading }),
     }),
