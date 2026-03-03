@@ -13,27 +13,13 @@ export const setupMessageListener = () => {
     if (message.type === "PR_ANALYSIS_COMPLETE") {
       const geminiText: string = message.result;
 
-      const lines: string[] = geminiText.split("\n");
+      //! TODO: HIGH PRIORIY -> This is working fine when title and description or title is being selected. But if you just select description, ### summary is being picked as it is the first string. Fix it.
+      const [titleResult, descriptionResult] = geminiText.split(/\n(.*)/s);
 
-      let titleResult: string = "";
-      let descriptionResult: string = "";
-      let currentSection: string = "";
-
-      for (const line of lines) {
-        if (line.includes("1.") || line.includes("title")) {
-          currentSection = "title";
-        } else if (line.includes("2.") || line.includes("description")) {
-          currentSection = "description";
-        } else if (line.trim()) {
-          if (currentSection === "title") {
-            titleResult += line + "\n";
-          } else if (currentSection === "description") {
-            descriptionResult += line + "\n";
-          }
-        }
-      }
-
-      setResults(titleResult.trim(), descriptionResult.trim());
+      setResults(
+        titleResult && titleResult.trim(),
+        descriptionResult && descriptionResult.trim(),
+      );
       setIsLoading(false);
     }
   });
