@@ -1,6 +1,7 @@
 import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundScripts.interface";
 import { analyzePRWithGemini } from "./gemini.service";
 
+// TODO: Remove this once developement is completed
 console.log("🧩 BACKGROUND SERVICE WORKER LOADED");
 
 const notifyPrAnalysisComplete = async (result: string | undefined) => {
@@ -20,6 +21,7 @@ const handleAnalysePrMessage = async ({
 }: IhandleAnalaysePrMessage): Promise<void> => {
   try {
     const result: string | undefined = await analyzePRWithGemini(payload);
+    // TODO: Remove this once developement is completed
     console.log("✅ Gemini result ready:", result);
     sendResponse({ success: true, result });
     await notifyPrAnalysisComplete(result);

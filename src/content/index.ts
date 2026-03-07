@@ -30,6 +30,7 @@ const applyChangesToGitHub = (title: string, description: string) => {
       titleElement.value = title;
       titleElement.dispatchEvent(new Event("input", { bubbles: true }));
       titleElement.dispatchEvent(new Event("change", { bubbles: true }));
+      // TODO: Remove this once developement is completed
       console.log("✅ Title injected:", title);
       break;
     }

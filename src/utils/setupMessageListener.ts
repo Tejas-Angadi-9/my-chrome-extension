@@ -7,6 +7,7 @@ export const setupMessageListener = () => {
 
   const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
+    // TODO: Remove this once developement is completed
     console.log("📨 Message received:", message);
 
     // TODO: There is hard coding of string, please move it to constants or other file

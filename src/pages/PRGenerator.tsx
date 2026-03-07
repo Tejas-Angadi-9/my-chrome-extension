@@ -8,10 +8,7 @@ import usePRStore from "../store/prGenerator.store";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
-  console.log("Typeof Title: ", typeof titleResult);
-  console.log("Typeof Description: ", typeof descriptionResult);
   const applyChangesHandler = async () => {
-    console.log("HELLO FROM CLICK HANDLER");
     try {
       const [tab] = await chrome.tabs.query({
         active: true,
@@ -19,7 +16,6 @@ export default function PRGenerator() {
       });
 
       if (tab?.id) {
-        console.log("HELLO INSIDE IF BLOCK");
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
           title: titleResult,
@@ -34,6 +30,7 @@ export default function PRGenerator() {
   At default, I'm getting the mock data.
   Replace this mock data with the response */
   useEffect(() => {
+    // TODO: Remove this once developement is completed
     console.log({
       titleResult: titleResult,
       descriptionResult: descriptionResult,

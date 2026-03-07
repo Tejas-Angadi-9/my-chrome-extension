@@ -4,6 +4,7 @@ import buildPRPrompt from "./utils/buildPRPrompt";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
 
+// TODO: Remove this once developement is completed
 console.log(
   "GEMINI_API_KEY loaded: ",
   !!GEMINI_API_KEY,
