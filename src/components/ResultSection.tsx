@@ -1,4 +1,7 @@
 import usePRStore from "../store/prGenerator.store";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import markdownComponents from "../utils/markdownComponents";
 
 export const ResultSection = () => {
   const { titleResult, descriptionResult } = usePRStore();
@@ -12,8 +15,12 @@ export const ResultSection = () => {
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
             Title
           </p>
-          <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm text-[var(--text-primary)] backdrop-blur-sm">
-            {titleResult}
+          <div className="prose prose-sm prose-invert max-w-none rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm text-[var(--text-primary)] backdrop-blur-sm">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}>
+              {titleResult}
+            </ReactMarkdown>
           </div>
         </div>
       )}
@@ -23,8 +30,12 @@ export const ResultSection = () => {
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
             Description
           </p>
-          <div className="whitespace-pre-wrap rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm leading-relaxed text-[var(--text-primary)] backdrop-blur-sm">
-            {descriptionResult}
+          <div className="prose prose-sm prose-invert max-w-none rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-3 text-sm leading-relaxed text-[var(--text-primary)] backdrop-blur-sm">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}>
+              {descriptionResult}
+            </ReactMarkdown>
           </div>
         </div>
       )}

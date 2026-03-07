@@ -20,6 +20,9 @@ const usePRStore = create<PRState>()(
         set({ instructions: updatedInstructions }),
       setResults: (title?: string, description?: string) =>
         set({ titleResult: title, descriptionResult: description }),
+      setTitle: (title: string) => set({ titleResult: title }),
+      setDescription: (description: string) =>
+        set({ descriptionResult: description }),
       setIsLoading: (loading: boolean) => set({ isLoading: loading }),
     }),
     {

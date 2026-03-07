@@ -5,7 +5,7 @@ export const setupMessageListener = () => {
     return;
   }
 
-  const { setResults, setIsLoading } = usePRStore.getState();
+  const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
     console.log("📨 Message received:", message);
 
@@ -13,13 +13,30 @@ export const setupMessageListener = () => {
     if (message.type === "PR_ANALYSIS_COMPLETE") {
       const geminiText: string = message.result;
 
-      //! TODO: HIGH PRIORIY -> This is working fine when title and description or title is being selected. But if you just select description, ### summary is being picked as it is the first string. Fix it.
-      const [titleResult, descriptionResult] = geminiText.split(/\n(.*)/s);
+      const firstNewline: number = geminiText.indexOf("\n");
+      const hasMultipleLines: boolean = firstNewline !== -1;
 
-      setResults(
-        titleResult && titleResult.trim(),
-        descriptionResult && descriptionResult.trim(),
-      );
+      const firstLine: string = hasMultipleLines
+        ? geminiText.slice(0, firstNewline).trim()
+        : geminiText.trim();
+      const rest: string = hasMultipleLines
+        ? geminiText.slice(firstNewline + 1).trim()
+        : "";
+
+      const isJustDescriptionGenerated: boolean = firstLine.startsWith("#");
+      const isJustTitleGenerated: boolean =
+        !isJustDescriptionGenerated && !rest;
+
+      const titleResult: string = isJustDescriptionGenerated ? "" : firstLine;
+      const descriptionResult: string =
+        isJustDescriptionGenerated || isJustTitleGenerated
+          ? isJustDescriptionGenerated
+            ? geminiText.trim()
+            : ""
+          : rest;
+
+      if (titleResult) setTitle(titleResult);
+      if (descriptionResult) setDescription(descriptionResult);
       setIsLoading(false);
     }
   });
