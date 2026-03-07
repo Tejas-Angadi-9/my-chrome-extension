@@ -6,6 +6,9 @@ export const COMMIT_MESSAGE_SELECTOR: string =
 export const BRANCH_SELECTOR: string = "css-truncate css-truncate-target";
 export const FILENAME_SELECTOR: string = "Link--primary Truncate-text";
 
+export const INPUT_FIELD = "prc-components-Input-IwWrt";
+export const DESCRIPTION_FIELD = "js-comment-field";
+
 export const TIMEOUT_SAFEGUARD: number = 10_000; //* FYI -> Using underscore ( _ ) to improve the readability for large numbers. It works same as 10000 number
 export const PROMISE_INTERVAL: number = 300;
 

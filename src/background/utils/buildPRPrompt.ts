@@ -1,28 +1,55 @@
-import type { PRExtractedData } from "../../shared/types";
+import type { BuildPRPromptOptions } from "../../interfaces/backgroundScripts.interface";
 
-export function buildPRPrompt(data: PRExtractedData): string {
+function buildPRPrompt(options: BuildPRPromptOptions): string {
+  const {
+    isGenerateTitleEnabled,
+    isGenerateDescriptionEnabled,
+    instructions,
+    PrPayload,
+  } = options;
+
+  const generateSections: string = [
+    isGenerateTitleEnabled && "title",
+    isGenerateDescriptionEnabled && "description",
+  ]
+    .filter(Boolean)
+    .join(" and ");
+
   return `
-You are a senior software engineer.
+You are a senior software engineer reviewing a GitHub Pull Request.
 
-Generate:
-1. A concise GitHub Pull Request title
-2. A clear PR description in markdown
-3. Keep the description short and in points
+Generate only the following: ${generateSections}.
+Do not generate anything else. Do not add extra separators, markdown fences, or labels outside the defined format.
+
+${
+  isGenerateTitleEnabled
+    ? `## Title
+A single plain text line. No markdown. Under 72 characters. No prefix like "Title:".`
+    : ""
+}
+
+${
+  isGenerateDescriptionEnabled
+    ? `## Description
+Markdown format with exactly these sections:
+### Summary
+### Changes
+### Notes
+
+${instructions ? `Follow these instructions: ${instructions}` : "Keep it short and in bullet points."} No extra sections.`
+    : ""
+}
 
 Context:
-- Base branch: ${data.branches.base}
-- Compare branch: ${data.branches.compare}
+- Base branch: ${PrPayload.branches.base}
+- Compare branch: ${PrPayload.branches.compare}
 
 Commit messages:
-${data.commitHints.map((c) => `- ${c}`).join("\n")}
+${PrPayload.commitHints.map((commitHint: string) => `- ${commitHint}`).join("\n")}
 
 Files changed:
-${data.filesNames.map((f) => `- ${f}`).join("\n")}
-
-
-Guidelines:
-- Title should be under 72 characters
-- Description should have Summary, Changes, and Notes sections
-- Be professional and clear
-`;
+${PrPayload.filesNames.map((fileName: string) => `- ${fileName}`).join("\n")}
+`.trim();
 }
+
+export default buildPRPrompt;

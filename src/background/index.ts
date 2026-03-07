@@ -1,7 +1,7 @@
-import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundMessage.interface";
-import type { PRExtractedData } from "../shared/types";
+import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundScripts.interface";
 import { analyzePRWithGemini } from "./gemini.service";
 
+// TODO: Remove this once developement is completed
 console.log("🧩 BACKGROUND SERVICE WORKER LOADED");
 
 const notifyPrAnalysisComplete = async (result: string | undefined) => {
@@ -21,6 +21,7 @@ const handleAnalysePrMessage = async ({
 }: IhandleAnalaysePrMessage): Promise<void> => {
   try {
     const result: string | undefined = await analyzePRWithGemini(payload);
+    // TODO: Remove this once developement is completed
     console.log("✅ Gemini result ready:", result);
     sendResponse({ success: true, result });
     await notifyPrAnalysisComplete(result);
@@ -33,13 +34,13 @@ const handleAnalysePrMessage = async ({
 
 // Main Entry point
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
-  if (message.type !== "ANALYSE_PR") {
-    console.log("Message Type is not ANALYSE_PR");
+  if (message.type !== "ANALYZE_PR") {
+    console.log("Message Type is not ANALYZE_PR");
     return;
   }
 
   void handleAnalysePrMessage({
-    payload: message.PrPayload as PRExtractedData,
+    payload: message.PrPayload,
     sendResponse,
   });
   return true;

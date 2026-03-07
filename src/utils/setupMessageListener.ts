@@ -5,35 +5,39 @@ export const setupMessageListener = () => {
     return;
   }
 
-  const { setResults, setIsLoading } = usePRStore.getState();
+  const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
+    // TODO: Remove this once developement is completed
     console.log("📨 Message received:", message);
 
     // TODO: There is hard coding of string, please move it to constants or other file
     if (message.type === "PR_ANALYSIS_COMPLETE") {
       const geminiText: string = message.result;
 
-      const lines: string[] = geminiText.split("\n");
+      const firstNewline: number = geminiText.indexOf("\n");
+      const hasMultipleLines: boolean = firstNewline !== -1;
 
-      let titleResult: string = "";
-      let descriptionResult: string = "";
-      let currentSection: string = "";
+      const firstLine: string = hasMultipleLines
+        ? geminiText.slice(0, firstNewline).trim()
+        : geminiText.trim();
+      const rest: string = hasMultipleLines
+        ? geminiText.slice(firstNewline + 1).trim()
+        : "";
 
-      for (const line of lines) {
-        if (line.includes("1.") || line.includes("title")) {
-          currentSection = "title";
-        } else if (line.includes("2.") || line.includes("description")) {
-          currentSection = "description";
-        } else if (line.trim()) {
-          if (currentSection === "title") {
-            titleResult += line + "\n";
-          } else if (currentSection === "description") {
-            descriptionResult += line + "\n";
-          }
-        }
-      }
+      const isJustDescriptionGenerated: boolean = firstLine.startsWith("#");
+      const isJustTitleGenerated: boolean =
+        !isJustDescriptionGenerated && !rest;
 
-      setResults(titleResult.trim(), descriptionResult.trim());
+      const titleResult: string = isJustDescriptionGenerated ? "" : firstLine;
+      const descriptionResult: string =
+        isJustDescriptionGenerated || isJustTitleGenerated
+          ? isJustDescriptionGenerated
+            ? geminiText.trim()
+            : ""
+          : rest;
+
+      if (titleResult) setTitle(titleResult);
+      if (descriptionResult) setDescription(descriptionResult);
       setIsLoading(false);
     }
   });
