@@ -1,8 +1,10 @@
-import { LuBot, LuEye, LuExternalLink } from "react-icons/lu";
-
-const AI_STUDIO_URL: string = "https://aistudio.google.com/apikey";
+import { LuBot, LuEye, LuEyeOff, LuExternalLink } from "react-icons/lu";
+import { GOOGLE_AI_STUDIO_URL } from "../shared/constants";
+import { useState } from "react";
 
 const OnboardingScreen = () => {
+  const [isApiKeyVisible, setIsApiKeyVisible] = useState<boolean>(false);
+
   return (
     <div className="flex flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">
       <div className="border-b border-[var(--border)] pb-4">
@@ -32,7 +34,7 @@ const OnboardingScreen = () => {
             <span>
               Open{" "}
               <a
-                href={AI_STUDIO_URL}
+                href={GOOGLE_AI_STUDIO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-0.5 text-[var(--accent)] underline-offset-2 hover:underline">
@@ -65,16 +67,17 @@ const OnboardingScreen = () => {
         <div className="relative">
           <input
             id="api-key-input"
-            type="password"
-            placeholder="Enter your API Key..."
+            type={isApiKeyVisible ? "text" : "password"}
+            placeholder="Enter your key..."
             autoComplete="off"
             spellCheck={false}
             className={`w-full rounded-[var(--radius-sm)] border bg-[var(--bg-elevated)] px-3 py-2.5 pr-10 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[var(--border-focus)] border-[var(--border)]`}
           />
           <button
             type="button"
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">
-            <LuEye size={15} />
+            onClick={() => setIsApiKeyVisible((prev) => !prev)}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors cursor-pointer">
+            {isApiKeyVisible ? <LuEye size={15} /> : <LuEyeOff size={15} />}
           </button>
         </div>
       </div>

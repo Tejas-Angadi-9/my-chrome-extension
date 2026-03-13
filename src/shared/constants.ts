@@ -19,6 +19,8 @@ export const ERROR_MESSAGES = {
   GEMINI_API_ERROR: "Failed to analyze with AI. Please try again.",
 } as const;
 
+export const GOOGLE_AI_STUDIO_URL: string =
+  "https://aistudio.google.com/apikey";
 // export const MESSAGE_TYPES = {
 //   PR_ANALYSIS_COMPLETE: "PR_ANALYSIS_COMPLETE",
 //   ANALYZE_PR: "ANALYZE_PR",
