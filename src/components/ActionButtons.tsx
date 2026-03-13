@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
+import toast from "react-hot-toast";
+import { ERROR_MESSAGES } from "../shared/constants";
 
 export const ActionButtons = () => {
   const {
@@ -39,7 +41,9 @@ export const ActionButtons = () => {
         setIsLoading(false);
       }
     } catch (error) {
+      // TODO: Remove this print statement
       console.error("Error occured while generating the response: ", error);
+      toast.error(ERROR_MESSAGES.GENERATE_PR_ERROR);
       setIsLoading(false);
     }
   };

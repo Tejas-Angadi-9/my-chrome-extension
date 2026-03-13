@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundScripts.interface";
 import { analyzePRWithGemini } from "./gemini.service";
 
@@ -14,6 +15,19 @@ const notifyPrAnalysisComplete = async (result: string | undefined) => {
   }
 };
 
+const notifyPrAnalysisFailed = async (errorMessage: string) => {
+  try {
+    await chrome.runtime.sendMessage({
+      type: "PR_ANALYSIS_FAILED",
+      errorMessage,
+    });
+  } catch (error) {
+    // TODO: Remove this print statement
+    console.error("Popup not open: ", error);
+    toast.error("FAILED");
+  }
+};
+
 const handleAnalysePrMessage = async ({
   payload,
   sendResponse,
@@ -27,6 +41,7 @@ const handleAnalysePrMessage = async ({
     const message: string =
       error instanceof Error ? error.message : String(error);
     sendResponse({ success: false, error: message });
+    await notifyPrAnalysisFailed(message);
   }
 };
 

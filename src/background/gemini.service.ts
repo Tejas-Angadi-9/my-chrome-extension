@@ -1,6 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import type { BuildPRPromptOptions } from "../interfaces/backgroundScripts.interface";
 import buildPRPrompt from "./utils/buildPRPrompt";
+import toast from "react-hot-toast";
+import { ERROR_MESSAGES } from "../shared/constants";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
 
@@ -33,5 +35,6 @@ export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
     return response.text;
   } catch (error) {
     console.error("GEMINI API FAILED: ", error);
+    toast.error(ERROR_MESSAGES.GEMINI_API_ERROR);
   }
 };

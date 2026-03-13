@@ -12,6 +12,7 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
   let isComparePage: boolean = false;
 
+  //! Move this to hooks part
   const checkBrowserUrl = async (): Promise<void> => {
     setIsLoading(true);
     setError(null);

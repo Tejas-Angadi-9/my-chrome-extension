@@ -12,6 +12,13 @@ export const DESCRIPTION_FIELD = "js-comment-field";
 export const TIMEOUT_SAFEGUARD: number = 10_000; //* FYI -> Using underscore ( _ ) to improve the readability for large numbers. It works same as 10000 number
 export const PROMISE_INTERVAL: number = 300;
 
+export const ERROR_MESSAGES = {
+  GENERIC_ERROR: "Something went wrong. Please try again.",
+  GENERATE_PR_ERROR: "Failed to generate PR. Please try again.",
+  APPLY_CHANGES_ERROR: "Failed to apply changes. Please try again.",
+  GEMINI_API_ERROR: "Failed to analyze with AI. Please try again.",
+} as const;
+
 // export const MESSAGE_TYPES = {
 //   PR_ANALYSIS_COMPLETE: "PR_ANALYSIS_COMPLETE",
 //   ANALYZE_PR: "ANALYZE_PR",
