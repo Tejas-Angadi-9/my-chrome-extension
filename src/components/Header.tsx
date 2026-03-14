@@ -15,7 +15,7 @@ export const Header = () => {
           </h1>
         </div>
         <button
-          className="text-xs font-medium text-[var(--accent)] hover:text-white transition-colors duration-150 focus:outline-none cursor-pointer"
+          className="text-xs font-light text-[var(--accent)] hover:text-white transition-colors duration-150 focus:outline-none cursor-pointer"
           onClick={() => setApiKey(null)}>
           <p>Change API Key</p>
         </button>
