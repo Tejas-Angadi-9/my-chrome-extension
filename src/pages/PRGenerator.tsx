@@ -6,6 +6,7 @@ import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
 import usePRStore from "../store/prGenerator.store";
 import toast from "react-hot-toast";
+import { TOAST_MESSAGES } from "../shared/constants";
 import { ERROR_MESSAGES } from "../shared/constants";
 
 export default function PRGenerator() {
@@ -18,13 +19,14 @@ export default function PRGenerator() {
         currentWindow: true,
       });
 
-     if (tab?.id) {
+      if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
           title: titleResult,
           description: descriptionResult,
         });
       }
+      toast.success(TOAST_MESSAGES.PR_PASTE_SUCCESS);
     } catch (error) {
       console.error("Error occured while applying changes to github: ", error);
       toast.error(ERROR_MESSAGES.APPLY_CHANGES_ERROR);
