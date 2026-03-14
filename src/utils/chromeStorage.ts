@@ -1,8 +1,17 @@
 import toast from "react-hot-toast";
 import useApiKeyStore from "../store/apiKey.store";
 
-// export const getApiKey = () => {
-// }
+export const getApiKey = async () => {
+  try {
+    const result = await chrome.storage.local.get("apiKey");
+    console.log("result from getAPiKey: ", result);
+    return result.apiKey;
+  } catch (error) {
+    toast.error("Failed to retrieve API key");
+    console.error("Failed to retrieve API key:", error);
+    return undefined;
+  }
+};
 
 export const saveApiKey = async (apiKey: string): Promise<boolean> => {
   const { setApiKey } = useApiKeyStore.getState();
