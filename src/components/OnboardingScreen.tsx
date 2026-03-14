@@ -1,9 +1,11 @@
 import { LuBot, LuEye, LuEyeOff, LuExternalLink } from "react-icons/lu";
 import { GOOGLE_AI_STUDIO_URL } from "../shared/constants";
 import { useState } from "react";
+import { saveApiKey } from "../utils/chromeStorage";
 
 const OnboardingScreen = () => {
   const [isApiKeyVisible, setIsApiKeyVisible] = useState<boolean>(false);
+  const [apiKeyValue, setApiKeyValue] = useState<string>("");
 
   return (
     <div className="flex flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">
@@ -67,8 +69,10 @@ const OnboardingScreen = () => {
         <div className="relative">
           <input
             id="api-key-input"
+            value={apiKeyValue}
             type={isApiKeyVisible ? "text" : "password"}
             placeholder="Enter your key..."
+            onChange={(event) => setApiKeyValue(event.target.value)}
             autoComplete="off"
             spellCheck={false}
             className={`w-full rounded-[var(--radius-sm)] border bg-[var(--bg-elevated)] px-3 py-2.5 pr-10 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[var(--border-focus)] border-[var(--border)]`}
@@ -82,7 +86,11 @@ const OnboardingScreen = () => {
         </div>
       </div>
 
-      <button className="relative w-full overflow-hidden rounded-[var(--radius)] bg-gradient-to-r from-[var(--accent)] to-[var(--accent-end)] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_var(--accent-glow)] transition-all duration-200 hover:shadow-[0_0_28px_var(--accent-glow)] cursor-pointer">
+      <button
+        onClick={() => {
+          saveApiKey(apiKeyValue);
+        }}
+        className="relative w-full overflow-hidden rounded-[var(--radius)] bg-gradient-to-r from-[var(--accent)] to-[var(--accent-end)] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_var(--accent-glow)] transition-all duration-200 hover:shadow-[0_0_28px_var(--accent-glow)] cursor-pointer">
         <span className="relative z-10 flex items-center justify-center gap-2">
           Proceed
         </span>
