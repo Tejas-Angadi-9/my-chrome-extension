@@ -12,7 +12,6 @@ export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
 
   const applyChangesHandler = async () => {
-    console.log("HELLO FROM CLICK HANDLER");
     try {
       const [tab] = await chrome.tabs.query({
         active: true,
@@ -36,6 +35,7 @@ export default function PRGenerator() {
   At default, I'm getting the mock data.
   Replace this mock data with the response */
   useEffect(() => {
+    // TODO: Remove this once developement is completed
     console.log({
       titleResult: titleResult,
       descriptionResult: descriptionResult,
