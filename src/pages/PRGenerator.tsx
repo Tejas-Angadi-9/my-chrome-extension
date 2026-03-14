@@ -5,9 +5,12 @@ import { Header } from "../components/Header";
 import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
 import usePRStore from "../store/prGenerator.store";
+import toast from "react-hot-toast";
+import { ERROR_MESSAGES } from "../shared/constants";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
+
   const applyChangesHandler = async () => {
     try {
       const [tab] = await chrome.tabs.query({
@@ -15,7 +18,8 @@ export default function PRGenerator() {
         currentWindow: true,
       });
 
-      if (tab?.id) {
+     if (tab?.id) {
+        console.log("HELLO INSIDE IF BLOCK");
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
           title: titleResult,
@@ -24,6 +28,7 @@ export default function PRGenerator() {
       }
     } catch (error) {
       console.error("Error occured while applying changes to github: ", error);
+      toast.error(ERROR_MESSAGES.APPLY_CHANGES_ERROR);
     }
   };
   /* TODO: Checking if there is update in the states

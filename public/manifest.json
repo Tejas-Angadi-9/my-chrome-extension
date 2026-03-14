@@ -1,22 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "React Chrome Extension",
+  "name": "AI PR Assistant",
+  "description": "AI PR Assistant helps you generate high-quality pull request descriptions on GitHub using AI. It analyzes your code changes and provides clear, concise summaries, saving you time and improving your workflow.",
   "version": "1.0.0",
-  "description": "A simple react app as chrome extension",
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "src/background/index.ts",
     "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
-      "js": ["content.js"],
-      "type": "module"
+      "js": ["src/content/index.ts"]
     }
   ],
-  "host_permissions": ["*://*/*"]
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://github.com/*"]
 }
