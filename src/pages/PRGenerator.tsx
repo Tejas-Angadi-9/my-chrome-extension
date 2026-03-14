@@ -19,7 +19,6 @@ export default function PRGenerator() {
       });
 
      if (tab?.id) {
-        console.log("HELLO INSIDE IF BLOCK");
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
           title: titleResult,
