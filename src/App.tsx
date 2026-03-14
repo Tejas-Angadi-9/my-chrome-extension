@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import PRGenerator from "./pages/PRGenerator";
 import usePRStore from "./store/prGenerator.store";
 import Loading from "./components/common/Loading";
 import Error from "./components/common/Error";
 import InvalidComparePage from "./components/common/InvalidComparePage";
+import useApiKeyStore from "./store/apiKey.store";
+import PRGenerator from "./pages/PRGenerator";
+import OnboardingScreen from "./components/OnboardingScreen";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -11,6 +13,7 @@ const App = () => {
     useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   let isComparePage: boolean = false;
+  const { apiKey } = useApiKeyStore();
 
   //! Move this to hooks part
   const checkBrowserUrl = async (): Promise<void> => {
@@ -61,17 +64,25 @@ const App = () => {
     checkBrowserUrl();
   }, []);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
+  if (!isGithubComparePage) {
+    return <InvalidComparePage />;
+  }
+
+  if (!apiKey) {
+    return <OnboardingScreen />;
+  }
+
   return (
     <div className="min-h-[var(--popup-min-height)] flex flex-col bg-transparent items-center justify-center mx-auto">
-      {isLoading ? (
-        <Loading />
-      ) : error ? (
-        <Error error={error} />
-      ) : isGithubComparePage ? (
-        <PRGenerator />
-      ) : (
-        <InvalidComparePage />
-      )}
+      <PRGenerator />
     </div>
   );
 };

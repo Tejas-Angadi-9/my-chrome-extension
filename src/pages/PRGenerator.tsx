@@ -10,8 +10,7 @@ import { ERROR_MESSAGES } from "../shared/constants";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
-  console.log("Typeof Title: ", typeof titleResult);
-  console.log("Typeof Description: ", typeof descriptionResult);
+
   const applyChangesHandler = async () => {
     console.log("HELLO FROM CLICK HANDLER");
     try {
@@ -20,7 +19,7 @@ export default function PRGenerator() {
         currentWindow: true,
       });
 
-      if (tab?.id) {
+     if (tab?.id) {
         console.log("HELLO INSIDE IF BLOCK");
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
