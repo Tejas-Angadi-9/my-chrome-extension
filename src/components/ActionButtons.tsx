@@ -61,7 +61,7 @@ export const ActionButtons = () => {
       } else {
         setIsLoading(false);
       }
-    } catch (error) {
+    } catch {
       setIsLoading(false);
     }
   };

@@ -1,9 +1,10 @@
 import type { PRExtractedData } from "../shared/types";
+import type { BuildPRPromptOptions } from "../interfaces/backgroundScripts.interface";
 import { isGithubPRPage } from "./detector";
 import { waitForCommits } from "./waiters";
 import { INPUT_FIELD, DESCRIPTION_FIELD } from "../shared/constants";
 
-const main = async (prOptions: any) => {
+const main = async (prOptions: Omit<BuildPRPromptOptions, "PrPayload">) => {
   if (!isGithubPRPage()) return;
   const PrPayload: PRExtractedData = await waitForCommits();
   const updatedPrPayload = { ...prOptions, PrPayload };
