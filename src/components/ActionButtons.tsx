@@ -1,30 +1,11 @@
 import { useCallback, useEffect } from "react";
 import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
-import toast from "react-hot-toast";
-import { ERROR_MESSAGES, MESSAGE_TYPES } from "../shared/constants";
-import { getApiKey } from "../utils/chromeStorage";
-import useApiKeyStore from "../store/apiKey.store";
+import handleGenerate from "../utils/handleGenerate";
 
 export const ActionButtons = () => {
-  const {
-    isLoading,
-    setIsLoading,
-    isGenerateTitleEnabled,
-    isGenerateDescriptionEnabled,
-    instructions,
-  } = usePRStore();
-  const { setApiKey } = useApiKeyStore();
-
-  useEffect(() => {
-    setupMessageListener();
-  }, []);
-
-  const prOptions = {
-    isGenerateTitleEnabled,
-    isGenerateDescriptionEnabled,
-    instructions,
-  };
+  const { isLoading, isGenerateTitleEnabled, isGenerateDescriptionEnabled } =
+    usePRStore();
 
   const buttonLabel = useCallback((): string => {
     if (isGenerateTitleEnabled && !isGenerateDescriptionEnabled)
@@ -34,37 +15,10 @@ export const ActionButtons = () => {
     return "Generate PR";
   }, [isGenerateTitleEnabled, isGenerateDescriptionEnabled]);
 
-  const handleGenerate = async (): Promise<void> => {
-    if (!isGenerateTitleEnabled && !isGenerateDescriptionEnabled) {
-      toast.error(ERROR_MESSAGES.SELECT_TITLE_OR_DESCRIPTION);
-      return;
-    }
-    const apiKey = await getApiKey();
-    if (!apiKey) {
-      setIsLoading(false);
-      setApiKey(null);
-      toast.error(ERROR_MESSAGES.API_KEY_MISSING);
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const [tab] = await chrome.tabs.query({
-        active: true,
-        currentWindow: true,
-      });
 
-      if (tab?.id) {
-        await chrome.tabs.sendMessage(tab.id, {
-          type: MESSAGE_TYPES.RUN_PR_EXTRACTION,
-          prOptions: prOptions,
-        });
-      } else {
-        setIsLoading(false);
-      }
-    } catch {
-      setIsLoading(false);
-    }
-  };
+  useEffect(() => {
+    setupMessageListener();
+  }, []);
 
   return (
     <button

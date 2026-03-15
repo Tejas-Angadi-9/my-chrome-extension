@@ -10,6 +10,12 @@ const OnboardingScreen = () => {
 
   const { isLoading } = useApiKeyStore();
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !isLoading && apiKeyValue.trim()) {
+      saveApiKey(apiKeyValue);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">
       <div className="border-b border-[var(--border)] pb-4">
@@ -18,7 +24,7 @@ const OnboardingScreen = () => {
             <LuBot size={20} />
           </span>
           <h1 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
-            AI PR Assistant
+            PR Assistant
           </h1>
         </div>
         <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -90,6 +96,7 @@ const OnboardingScreen = () => {
             onChange={(event) => setApiKeyValue(event.target.value)}
             autoComplete="off"
             spellCheck={false}
+            onKeyDown={handleKeyDown}
             className={`w-full rounded-[var(--radius-sm)] border bg-[var(--bg-elevated)] px-3 py-2.5 pr-10 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[var(--border-focus)] border-[var(--border)]`}
           />
           <button
