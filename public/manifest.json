@@ -17,5 +17,10 @@
     }
   ],
   "permissions": ["storage", "activeTab"],
-  "host_permissions": ["https://github.com/*"]
+  "host_permissions": ["https://github.com/*"],
+  "icons": {
+    "16": "icons/ai-pr-icon.png",
+    "48": "icons/ai-pr-icon.png",
+    "128": "icons/ai-pr-icon.png"
+  }
 }

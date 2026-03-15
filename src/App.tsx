@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import usePRStore from "./store/prGenerator.store";
 import Loading from "./components/common/Loading";
 import Error from "./components/common/Error";
@@ -6,24 +6,22 @@ import InvalidComparePage from "./components/common/InvalidComparePage";
 import useApiKeyStore from "./store/apiKey.store";
 import PRGenerator from "./pages/PRGenerator";
 import OnboardingScreen from "./components/OnboardingScreen";
+import { getApiKey } from "./utils/chromeStorage";
+import { isGithubPRPageUrl } from "./utils/github";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isGithubComparePage, setIsGithubComparePage] =
     useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  let isComparePage: boolean = false;
-  const { apiKey } = useApiKeyStore();
+  const { apiKey, setApiKey } = useApiKeyStore();
 
-  //! Move this to hooks part
-  const checkBrowserUrl = async (): Promise<void> => {
+  const checkBrowserUrl = useCallback(async (): Promise<void> => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // TODO: Move this hard coded string of chrome type to constant
       if (typeof chrome === "undefined" || !chrome.tabs) {
-        // TODO: Move this hard coded string of error message to constant
         setError("Extension context not available");
         return;
       }
@@ -38,31 +36,29 @@ const App = () => {
         setIsGithubComparePage(false);
         return;
       }
-
-      try {
-        const { hostname, pathname } = new URL(url);
-        // TODO: Move this hard coded string of hostname and pathname to constant
-        isComparePage =
-          hostname === "github.com" && pathname.includes("/compare");
-      } catch {
-        isComparePage = false;
-      }
-
-      setIsGithubComparePage(isComparePage);
+      setIsGithubComparePage(url ? isGithubPRPageUrl(url) : false);
     } catch (error: unknown) {
-      // TODO: Move this hard coded string of error message to constant
-      const errorMessage: string = "Failed to check tab URL";
-      setError(errorMessage);
+      console.error("Failed to check tab URL:", error);
+      setError("Failed to check tab URL");
       setIsGithubComparePage(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [setIsLoading, setError, setIsGithubComparePage]);
+
+  const fetchApiKey = useCallback(async () => {
+    const storedKey = await getApiKey();
+    if (storedKey) {
+      setApiKey(String(storedKey));
+    }
+  }, [setApiKey]);
 
   useEffect(() => {
     usePRStore.getState().setIsLoading(false);
     checkBrowserUrl();
-  }, []);
+
+    fetchApiKey();
+  }, [fetchApiKey, checkBrowserUrl]);
 
   if (isLoading) {
     return <Loading />;

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ActionButtons } from "../components/ActionButtons";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Header } from "../components/Header";
@@ -6,6 +5,7 @@ import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
 import usePRStore from "../store/prGenerator.store";
 import toast from "react-hot-toast";
+import { TOAST_MESSAGES } from "../shared/constants";
 import { ERROR_MESSAGES } from "../shared/constants";
 
 export default function PRGenerator() {
@@ -18,29 +18,19 @@ export default function PRGenerator() {
         currentWindow: true,
       });
 
-     if (tab?.id) {
-        console.log("HELLO INSIDE IF BLOCK");
+      if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
           type: "APPLY_CHANGES",
           title: titleResult,
           description: descriptionResult,
         });
       }
+      toast.success(TOAST_MESSAGES.PR_PASTE_SUCCESS);
     } catch (error) {
       console.error("Error occured while applying changes to github: ", error);
       toast.error(ERROR_MESSAGES.APPLY_CHANGES_ERROR);
     }
   };
-  /* TODO: Checking if there is update in the states
-  At default, I'm getting the mock data.
-  Replace this mock data with the response */
-  useEffect(() => {
-    // TODO: Remove this once developement is completed
-    console.log({
-      titleResult: titleResult,
-      descriptionResult: descriptionResult,
-    });
-  }, [titleResult, descriptionResult]);
 
   return (
     <div className="flex flex-1 flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">

@@ -6,7 +6,7 @@ const useApiKeyStore = create<ApiKeyStoreState>()((set) => ({
   isLoading: false,
   errorMessage: null,
 
-  setApiKey: async (key: string) => {
+  setApiKey: async (key: string | null) => {
     set({ isLoading: true, errorMessage: null });
 
     try {

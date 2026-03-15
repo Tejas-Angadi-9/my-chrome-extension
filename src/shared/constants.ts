@@ -17,6 +17,12 @@ export const ERROR_MESSAGES = {
   GENERATE_PR_ERROR: "Failed to generate PR. Please try again.",
   APPLY_CHANGES_ERROR: "Failed to apply changes. Please try again.",
   GEMINI_API_ERROR: "Failed to analyze with AI. Please try again.",
+  SELECT_TITLE_OR_DESCRIPTION: "Select at least title or description",
+  API_KEY_MISSING: "API key is missing. Please enter your API key.",
+} as const;
+
+export const TOAST_MESSAGES = {
+  PR_PASTE_SUCCESS: "PR details pasted successfully!",
 } as const;
 
 export const GOOGLE_AI_STUDIO_URL: string =

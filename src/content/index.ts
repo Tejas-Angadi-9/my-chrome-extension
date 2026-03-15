@@ -8,8 +8,6 @@ const main = async (prOptions: any) => {
   const PrPayload: PRExtractedData = await waitForCommits();
   const updatedPrPayload = { ...prOptions, PrPayload };
 
-  // TODO: Remove this print statement, once development is done
-  console.log("prPayload: ", updatedPrPayload);
   chrome.runtime.sendMessage({
     type: "ANALYZE_PR",
     PrPayload: updatedPrPayload,
@@ -17,10 +15,8 @@ const main = async (prOptions: any) => {
 };
 
 const applyChangesToGitHub = (title: string, description: string) => {
-  // TODO: Add other selectors too as a backup
   const titleSelectors = [`.${INPUT_FIELD}`];
 
-  // TODO: Add other selectors too as a backup
   const descriptionSelectors = [`.${DESCRIPTION_FIELD}`];
 
   let titleElement = null;
@@ -30,8 +26,6 @@ const applyChangesToGitHub = (title: string, description: string) => {
       titleElement.value = title;
       titleElement.dispatchEvent(new Event("input", { bubbles: true }));
       titleElement.dispatchEvent(new Event("change", { bubbles: true }));
-      // TODO: Remove this once developement is completed
-      console.log("✅ Title injected:", title);
       break;
     }
   }
@@ -48,7 +42,6 @@ const applyChangesToGitHub = (title: string, description: string) => {
       descriptionElement.value = description;
       descriptionElement.dispatchEvent(new Event("input", { bubbles: true }));
       descriptionElement.dispatchEvent(new Event("change", { bubbles: true }));
-      console.log("✅ Description injected:", description);
       break;
     }
   }
@@ -65,7 +58,6 @@ chrome.runtime.onMessage.addListener((message) => {
 
   const prOptions = message.prOptions;
   if (!prOptions) {
-    console.log("No PR Options found");
     return;
   }
 
