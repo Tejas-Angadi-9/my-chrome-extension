@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
 import toast from "react-hot-toast";
@@ -15,7 +15,11 @@ export const ActionButtons = () => {
     instructions,
   } = usePRStore();
   const { setApiKey } = useApiKeyStore();
-  const listenerSetup: React.RefObject<boolean> = useRef(false);
+
+  useEffect(() => {
+    setupMessageListener();
+  }, []);
+
   const prOptions = {
     isGenerateTitleEnabled,
     isGenerateDescriptionEnabled,
@@ -44,11 +48,6 @@ export const ActionButtons = () => {
     }
     setIsLoading(true);
     try {
-      if (!listenerSetup.current) {
-        setupMessageListener();
-        listenerSetup.current = true;
-      }
-
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
@@ -63,9 +62,6 @@ export const ActionButtons = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      // TODO: Remove this print statement
-      console.error("Error occured while generating the response: ", error);
-      toast.error(ERROR_MESSAGES.GENERATE_PR_ERROR);
       setIsLoading(false);
     }
   };

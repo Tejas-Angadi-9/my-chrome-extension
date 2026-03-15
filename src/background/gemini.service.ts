@@ -1,7 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import type { BuildPRPromptOptions } from "../interfaces/backgroundScripts.interface";
 import buildPRPrompt from "./utils/buildPRPrompt";
-import toast from "react-hot-toast";
 import { ERROR_MESSAGES } from "../shared/constants";
 
 export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
@@ -32,7 +31,22 @@ export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
     });
     return response.text;
   } catch (error) {
-    toast.error(ERROR_MESSAGES.GEMINI_API_ERROR);
-    console.error("GEMINI API FAILED: ", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (
+      errorMessage.includes("API_KEY_INVALID") ||
+      errorMessage.includes("API key not valid")
+    ) {
+      throw new Error("Invalid API key. Please update your API key.");
+    }
+    if (
+      errorMessage.includes("429") ||
+      errorMessage.includes("rate limit") ||
+      errorMessage.includes("RESOURCE_EXHAUSTED")
+    ) {
+      throw new Error(
+        "Rate limit exceeded. Please try again later or upgrade your plan.",
+      );
+    }
+    throw new Error(ERROR_MESSAGES.GEMINI_API_ERROR);
   }
 };

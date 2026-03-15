@@ -1,9 +1,15 @@
 import usePRStore from "../store/prGenerator.store";
+import toast from "react-hot-toast";
+
+let isListenerRegistered: boolean = false;
 
 export const setupMessageListener = () => {
   if (typeof chrome === "undefined" || !chrome.runtime.onMessage) {
     return;
   }
+
+  if (isListenerRegistered) return;
+  isListenerRegistered = true;
 
   const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
@@ -38,6 +44,13 @@ export const setupMessageListener = () => {
 
       if (titleResult) setTitle(titleResult);
       if (descriptionResult) setDescription(descriptionResult);
+      setIsLoading(false);
+    }
+
+    if (message.type === "PR_ANALYSIS_FAILED") {
+      toast.error(
+        message.errorMessage || "Something went wrong. Please try again.",
+      );
       setIsLoading(false);
     }
   });
