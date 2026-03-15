@@ -11,7 +11,7 @@ export const Header = () => {
             <LuBot size={20} />
           </span>
           <h1 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
-            AI PR Generator
+            PR Assistant
           </h1>
         </div>
         <button

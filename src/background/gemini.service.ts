@@ -11,7 +11,7 @@ export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
   });
 
   if (!GEMINI_API_KEY) {
-    throw new Error("Missing or invalid Gemini API key. Check your .env file.");
+    throw new Error(ERROR_MESSAGES.MISSING_API_KEY);
   }
 
   const ai: GoogleGenAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
@@ -35,16 +35,14 @@ export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
       errorMessage.includes("API_KEY_INVALID") ||
       errorMessage.includes("API key not valid")
     ) {
-      throw new Error("Invalid API key. Please update your API key.");
+      throw new Error(ERROR_MESSAGES.INVALID_API_KEY);
     }
     if (
       errorMessage.includes("429") ||
       errorMessage.includes("rate limit") ||
       errorMessage.includes("RESOURCE_EXHAUSTED")
     ) {
-      throw new Error(
-        "Rate limit exceeded. Please try again later or upgrade your plan.",
-      );
+      throw new Error(ERROR_MESSAGES.RATE_LIMIT_EXCEEDED);
     }
     throw new Error(ERROR_MESSAGES.GEMINI_API_ERROR);
   }

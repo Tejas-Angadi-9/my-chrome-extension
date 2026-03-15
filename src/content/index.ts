@@ -1,15 +1,20 @@
 import type { PRExtractedData } from "../shared/types";
+import type { BuildPRPromptOptions } from "../interfaces/backgroundScripts.interface";
 import { isGithubPRPage } from "./detector";
 import { waitForCommits } from "./waiters";
-import { INPUT_FIELD, DESCRIPTION_FIELD } from "../shared/constants";
+import {
+  INPUT_FIELD,
+  DESCRIPTION_FIELD,
+  MESSAGE_TYPES,
+} from "../shared/constants";
 
-const main = async (prOptions: any) => {
+const main = async (prOptions: Omit<BuildPRPromptOptions, "PrPayload">) => {
   if (!isGithubPRPage()) return;
   const PrPayload: PRExtractedData = await waitForCommits();
   const updatedPrPayload = { ...prOptions, PrPayload };
 
   chrome.runtime.sendMessage({
-    type: "ANALYZE_PR",
+    type: MESSAGE_TYPES.ANALYZE_PR,
     PrPayload: updatedPrPayload,
   });
 };
@@ -51,7 +56,7 @@ const applyChangesToGitHub = (title: string, description: string) => {
 };
 
 chrome.runtime.onMessage.addListener((message) => {
-  if (message.type === "APPLY_CHANGES") {
+  if (message.type === MESSAGE_TYPES.APPLY_CHANGES) {
     applyChangesToGitHub(message.title, message.description);
     return;
   }
@@ -61,7 +66,7 @@ chrome.runtime.onMessage.addListener((message) => {
     return;
   }
 
-  if (message.type === "RUN_PR_EXTRACTION") {
+  if (message.type === MESSAGE_TYPES.RUN_PR_EXTRACTION) {
     main(prOptions);
   }
 });

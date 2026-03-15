@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "AI PR Assistant",
-  "description": "AI PR Assistant helps you generate high-quality pull request descriptions on GitHub using AI. It analyzes your code changes and provides clear, concise summaries, saving you time and improving your workflow.",
+  "name": "PR Assistant",
+  "description": "PR Assistant helps you generate high-quality pull request descriptions on GitHub using AI. It analyzes your code changes and provides clear, concise summaries, saving you time and improving your workflow.",
   "version": "1.0.0",
   "action": {
     "default_popup": "index.html"

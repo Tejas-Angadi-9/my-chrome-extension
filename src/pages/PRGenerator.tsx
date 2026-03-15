@@ -5,8 +5,11 @@ import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
 import usePRStore from "../store/prGenerator.store";
 import toast from "react-hot-toast";
-import { TOAST_MESSAGES } from "../shared/constants";
-import { ERROR_MESSAGES } from "../shared/constants";
+import {
+  TOAST_MESSAGES,
+  ERROR_MESSAGES,
+  MESSAGE_TYPES,
+} from "../shared/constants";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
@@ -20,7 +23,7 @@ export default function PRGenerator() {
 
       if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
-          type: "APPLY_CHANGES",
+          type: MESSAGE_TYPES.APPLY_CHANGES,
           title: titleResult,
           description: descriptionResult,
         });
@@ -43,7 +46,7 @@ export default function PRGenerator() {
         <button
           className="relative w-full overflow-hidden rounded-[var(--radius)] bg-gradient-to-r from-[var(--accent)] to-[var(--accent-end)] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_var(--accent-glow)] transition-all duration-200 hover:shadow-[0_0_28px_var(--accent-glow)] disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none cursor-pointer"
           onClick={applyChangesHandler}>
-          Apply Changes
+          Paste to GitHub
         </button>
       )}
     </div>
