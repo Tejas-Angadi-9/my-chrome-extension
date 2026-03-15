@@ -52,13 +52,25 @@ const OnboardingScreen = () => {
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-muted)] text-[10px] font-bold text-[var(--accent)]">
               2
             </span>
-            <span>Click "Get API key" and create or copy a key</span>
+            <span>Login to your account</span>
           </li>
           <li className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-muted)] text-[10px] font-bold text-[var(--accent)]">
               3
             </span>
-            <span>Paste it below and click Proceed</span>
+            <span>Click on Create API Key</span>
+          </li>
+          <li className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]">
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-muted)] text-[10px] font-bold text-[var(--accent)]">
+              4
+            </span>
+            <span>Select or create a project</span>
+          </li>
+          <li className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]">
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-muted)] text-[10px] font-bold text-[var(--accent)]">
+              5
+            </span>
+            <span>Copy the key and store it safely</span>
           </li>
         </ol>
       </div>
