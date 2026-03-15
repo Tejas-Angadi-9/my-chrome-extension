@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ActionButtons } from "../components/ActionButtons";
 import { CheckboxGroup } from "../components/CheckboxGroup";
 import { Header } from "../components/Header";
