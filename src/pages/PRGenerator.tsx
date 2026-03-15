@@ -32,16 +32,6 @@ export default function PRGenerator() {
       toast.error(ERROR_MESSAGES.APPLY_CHANGES_ERROR);
     }
   };
-  /* TODO: Checking if there is update in the states
-  At default, I'm getting the mock data.
-  Replace this mock data with the response */
-  useEffect(() => {
-    // TODO: Remove this once developement is completed
-    console.log({
-      titleResult: titleResult,
-      descriptionResult: descriptionResult,
-    });
-  }, [titleResult, descriptionResult]);
 
   return (
     <div className="flex flex-1 flex-col gap-5 p-5 w-full max-w-[var(--popup-width)]">

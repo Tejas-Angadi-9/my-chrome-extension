@@ -13,10 +13,6 @@ export const setupMessageListener = () => {
 
   const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
-    // TODO: Remove this once developement is completed
-    console.log("📨 Message received:", message);
-
-    // TODO: There is hard coding of string, please move it to constants or other file
     if (message.type === "PR_ANALYSIS_COMPLETE") {
       const geminiText: string = message.result;
 

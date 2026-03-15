@@ -9,7 +9,6 @@ export const analyzePRWithGemini = async (PrPayload: BuildPRPromptOptions) => {
       resolve(result.apiKey as string | undefined);
     });
   });
-  console.log("GEMINI_API_KEY: ", GEMINI_API_KEY);
 
   if (!GEMINI_API_KEY) {
     throw new Error("Missing or invalid Gemini API key. Check your .env file.");

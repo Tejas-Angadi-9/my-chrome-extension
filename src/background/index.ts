@@ -9,7 +9,7 @@ const notifyPrAnalysisComplete = async (result: string | undefined) => {
       result: result,
     });
   } catch (error) {
-    console.log("Popup not open: ", error);
+    console.error("Popup not open: ", error);
   }
 };
 
@@ -20,7 +20,6 @@ const notifyPrAnalysisFailed = async (errorMessage: string) => {
       errorMessage,
     });
   } catch (error) {
-    // TODO: Remove this print statement
     console.error("Popup not open: ", error);
     toast.error("FAILED");
   }
@@ -32,8 +31,6 @@ const handleAnalysePrMessage = async ({
 }: IhandleAnalaysePrMessage): Promise<void> => {
   try {
     const result: string | undefined = await analyzePRWithGemini(payload);
-    // TODO: Remove this once developement is completed
-    console.log("✅ Gemini result ready:", result);
     sendResponse({ success: true, result });
     await notifyPrAnalysisComplete(result);
   } catch (error) {
@@ -47,7 +44,7 @@ const handleAnalysePrMessage = async ({
 // Main Entry point
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   if (message.type !== "ANALYZE_PR") {
-    console.log("Message Type is not ANALYZE_PR");
+    console.error("Message Type is not ANALYZE_PR");
     return;
   }
 
