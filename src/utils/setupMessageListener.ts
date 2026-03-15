@@ -1,5 +1,6 @@
 import usePRStore from "../store/prGenerator.store";
 import toast from "react-hot-toast";
+import { MESSAGE_TYPES, ERROR_MESSAGES } from "../shared/constants";
 
 let isListenerRegistered: boolean = false;
 
@@ -13,7 +14,7 @@ export const setupMessageListener = () => {
 
   const { setTitle, setDescription, setIsLoading } = usePRStore.getState();
   chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === "PR_ANALYSIS_COMPLETE") {
+    if (message.type === MESSAGE_TYPES.PR_ANALYSIS_COMPLETE) {
       const geminiText: string = message.result;
 
       const firstNewline: number = geminiText.indexOf("\n");
@@ -43,10 +44,8 @@ export const setupMessageListener = () => {
       setIsLoading(false);
     }
 
-    if (message.type === "PR_ANALYSIS_FAILED") {
-      toast.error(
-        message.errorMessage || "Something went wrong. Please try again.",
-      );
+    if (message.type === MESSAGE_TYPES.PR_ANALYSIS_FAILED) {
+      toast.error(message.errorMessage || ERROR_MESSAGES.GENERIC_ERROR);
       setIsLoading(false);
     }
   });

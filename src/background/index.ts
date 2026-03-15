@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
 import type { IhandleAnalaysePrMessage } from "../interfaces/backgroundScripts.interface";
 import { analyzePRWithGemini } from "./gemini.service";
+import { MESSAGE_TYPES, ERROR_MESSAGES } from "../shared/constants";
 
 const notifyPrAnalysisComplete = async (result: string | undefined) => {
   try {
     await chrome.runtime.sendMessage({
-      type: "PR_ANALYSIS_COMPLETE",
+      type: MESSAGE_TYPES.PR_ANALYSIS_COMPLETE,
       result: result,
     });
   } catch (error) {
@@ -16,12 +17,12 @@ const notifyPrAnalysisComplete = async (result: string | undefined) => {
 const notifyPrAnalysisFailed = async (errorMessage: string) => {
   try {
     await chrome.runtime.sendMessage({
-      type: "PR_ANALYSIS_FAILED",
+      type: MESSAGE_TYPES.PR_ANALYSIS_FAILED,
       errorMessage,
     });
   } catch (error) {
     console.error("Popup not open: ", error);
-    toast.error("FAILED");
+    toast.error(ERROR_MESSAGES.GENERIC_ERROR);
   }
 };
 
@@ -43,7 +44,7 @@ const handleAnalysePrMessage = async ({
 
 // Main Entry point
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
-  if (message.type !== "ANALYZE_PR") {
+  if (message.type !== MESSAGE_TYPES.ANALYZE_PR) {
     console.error("Message Type is not ANALYZE_PR");
     return;
   }

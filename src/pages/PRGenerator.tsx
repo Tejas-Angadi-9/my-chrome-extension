@@ -5,8 +5,11 @@ import { InstructionTextarea } from "../components/InstructionTextarea";
 import { ResultSection } from "../components/ResultSection";
 import usePRStore from "../store/prGenerator.store";
 import toast from "react-hot-toast";
-import { TOAST_MESSAGES } from "../shared/constants";
-import { ERROR_MESSAGES } from "../shared/constants";
+import {
+  TOAST_MESSAGES,
+  ERROR_MESSAGES,
+  MESSAGE_TYPES,
+} from "../shared/constants";
 
 export default function PRGenerator() {
   const { titleResult, descriptionResult } = usePRStore();
@@ -20,7 +23,7 @@ export default function PRGenerator() {
 
       if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
-          type: "APPLY_CHANGES",
+          type: MESSAGE_TYPES.APPLY_CHANGES,
           title: titleResult,
           description: descriptionResult,
         });

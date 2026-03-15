@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import usePRStore from "../store/prGenerator.store";
 import { setupMessageListener } from "../utils/setupMessageListener";
 import toast from "react-hot-toast";
-import { ERROR_MESSAGES } from "../shared/constants";
+import { ERROR_MESSAGES, MESSAGE_TYPES } from "../shared/constants";
 import { getApiKey } from "../utils/chromeStorage";
 import useApiKeyStore from "../store/apiKey.store";
 
@@ -55,7 +55,7 @@ export const ActionButtons = () => {
 
       if (tab?.id) {
         await chrome.tabs.sendMessage(tab.id, {
-          type: "RUN_PR_EXTRACTION",
+          type: MESSAGE_TYPES.RUN_PR_EXTRACTION,
           prOptions: prOptions,
         });
       } else {
