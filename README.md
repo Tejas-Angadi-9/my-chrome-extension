@@ -169,6 +169,20 @@ Output goes to the `build/` directory.
 
 ---
 
+
+## Security & Privacy
+
+**PR Assistant is designed with your privacy and code security in mind.**
+
+- The extension only extracts commit messages, branch names, and changed file names from the GitHub compare page.
+- **It does NOT access, read, or transmit the actual code changes or file contents.**
+- All data extraction happens locally in your browser; only the minimal context (commit messages, branch names, file names) is sent to the Gemini API for PR generation.
+- Your Gemini API key is stored securely in your browser's local storage and is never shared externally.
+
+This ensures your source code and sensitive information remain private and are never exposed to any third party.
+
+---
+
 ## Usage Notes
 
 - The extension only activates on GitHub compare pages (`github.com/*/compare/*`).
